@@ -31,17 +31,6 @@ public class GameController : Singleton<GameController>
         GameUI.Ins.showGameUi(false);
         GameUI.Ins.UpdateHealth(m_health);
         GameUI.Ins.updateScore(m_score);
-        ChangeBirdSpeed();
-    }
-
-    private void ChangeBirdSpeed()
-    {
-        float x = 0.2f;
-        foreach (var bird in birdPrefabs)
-        {
-            bird.xSpeed += x;
-            x += 1.3f;
-        }
     }
 
     public void PlayGame()

@@ -154,7 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ae5b52ccf56c0942ba4218a42c73e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xSpeed: 3
+  xSpeed: 5
   minYSpeed: -2
   maxYSpeed: 1.5
+  point: 30
   deathVfx: {fileID: 149344, guid: 617378de28fbaa64c96485d5b0d9169b, type: 3}

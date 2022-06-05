@@ -49,13 +49,11 @@ public class GameUI : Singleton<GameUI>
 
     public void UpdateHealth(int health)
     {
-        Debug.Log(health);
         m_Health.text = "x" + health;
     }
 
     public void updateScore(int score)
     {
-        Debug.Log(score);
         m_Score.text = "x" + score;
     }
 

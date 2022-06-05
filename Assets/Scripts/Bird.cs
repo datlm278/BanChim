@@ -7,7 +7,7 @@ public class Bird : MonoBehaviour
     public float xSpeed;
     public float minYSpeed;
     public float maxYSpeed;
-    public int score;
+    public int point;
 
 
     public GameObject deathVfx;
@@ -63,7 +63,7 @@ public class Bird : MonoBehaviour
 
     public void Dead()
     {
-        GameController.Ins.Score++;
+        GameController.Ins.Score += point;
 
         Destroy(gameObject);
 
