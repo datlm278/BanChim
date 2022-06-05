@@ -17,6 +17,8 @@ public class GameUI : Singleton<GameUI>
     public Text timer;
     public Text birdKilled;
 
+    public Text health;
+
     Dialog m_curDialog;
 
     public Dialog CurDialog { get => m_curDialog; set => m_curDialog = value; }
