@@ -54,7 +54,7 @@ public class GameUI : Singleton<GameUI>
 
     public void updateScore(int score)
     {
-        m_Score.text = "x" + score;
+        m_Score.text = "Score: " + score;
     }
 
     public void updateFireRate(float rate)
@@ -71,7 +71,7 @@ public class GameUI : Singleton<GameUI>
         if (pauseDialog != null)
         {
             pauseDialog.show(true);
-            pauseDialog.UpdateDialog("Game pause", "Best score: x" + Prefs.bestScore);
+            pauseDialog.UpdateDialog("Game pause", "Best score: " + Prefs.bestScore);
             m_curDialog = pauseDialog;
         }
     }
