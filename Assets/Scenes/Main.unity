@@ -3169,8 +3169,10 @@ MonoBehaviour:
   - {fileID: 8000645559530509096, guid: 48e02014b1db4f5429a9c96619a81464, type: 3}
   - {fileID: 7868884818586925317, guid: 9837494a270d3d34784f3178b4dcdb08, type: 3}
   - {fileID: 1335844047110390491, guid: f621ff89fd5cfe54aa4a16e0d817e2f4, type: 3}
+  - {fileID: 601829440353161782, guid: a2c830cfd3240e046bc29631f191c5c0, type: 3}
+  - {fileID: 110641924350281708, guid: af49aa2ce1e7b1346afb8d9ec845bc1a, type: 3}
   timeLimit: 120
-  gameUI: {fileID: 0}
+  gameUI: {fileID: 211900540}
 --- !u!4 &801701630
 Transform:
   m_ObjectHideFlags: 0
