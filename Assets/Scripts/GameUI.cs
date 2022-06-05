@@ -17,6 +17,7 @@ public class GameUI : Singleton<GameUI>
     public Text timer;
     public Text m_Score;
     public Text m_Health;
+    public Text streakLabel;
 
     Dialog m_curDialog;
 
@@ -57,12 +58,18 @@ public class GameUI : Singleton<GameUI>
         m_Score.text = "Score: " + score;
     }
 
+    public void UpdateStreakLabel(int streak)
+    {
+        streakLabel.text = "Streak: x" + streak;
+    }
     public void updateFireRate(float rate)
     {
-        if (fireRateFilled != null)
-        {
-            fireRateFilled.fillAmount = rate;
-        }
+        fireRateFilled.fillAmount = rate;
+    }
+
+    public void UpdateStreakTime(float rate)
+    {
+        streakFilled.fillAmount = rate;
     }
 
     public void pauseGame()

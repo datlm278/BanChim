@@ -35,6 +35,7 @@ public class GameController : Singleton<GameController>
 
     public void PlayGame()
     {
+        Player.Ins.CurFireRate = 0;
         StartCoroutine(GameSpawn());
         StartCoroutine(TimeCountDown());
         GameUI.Ins.showGameUi(true);
@@ -118,6 +119,6 @@ public class GameController : Singleton<GameController>
         float minutes = Mathf.Floor(time / 60);
         float seconds = Mathf.RoundToInt(time % 60);
 
-        return minutes.ToString("00") + " : " + seconds.ToString("00");
+        return minutes.ToString("00") + ":" + seconds.ToString("00");
     }
 }

@@ -7,17 +7,32 @@ public class Player : Singleton<Player>
     public float fireRate;
     float m_curFireRate;
     bool isShooted;
+    bool isStreaked;
+    int streakLevel;
+    float currStreakTime;
+    int[] streakLevels = { 10, 7, 5, 3 };
+    int[] multipleStreak = { 2, 3, 5, 8 };
     bool isStop = false;
 
     public GameObject viewFinder;
     GameObject m_viewFinder;
 
     public bool IsStop { get => isStop; set => isStop = value; }
+    public float CurFireRate { get => m_curFireRate; set => m_curFireRate = value; }
+    public int GetMultipleStreakPoint()
+    {
+        if (isStreaked)
+        {
+            return multipleStreak[streakLevel - 1];
+        }
+
+        return 1;
+    }
 
     public override void Awake()
     {
         MakeSingleton(false);
-        m_curFireRate = fireRate;
+        CurFireRate = fireRate;
     }
 
     public override void Start()
@@ -38,14 +53,26 @@ public class Player : Singleton<Player>
         }
         if (isShooted)
         {
-            m_curFireRate -= Time.deltaTime;
-            if (m_curFireRate <= 0)
+            CurFireRate -= Time.deltaTime;
+            if (CurFireRate <= 0)
             {
                 isShooted = false;
-                m_curFireRate = fireRate;
+                CurFireRate = fireRate;
             }
 
-            GameUI.Ins.updateFireRate(m_curFireRate / fireRate);
+            GameUI.Ins.updateFireRate(CurFireRate / fireRate);
+        }
+        if (isStreaked)
+        {
+            currStreakTime -= Time.deltaTime;
+            if (currStreakTime <= 0)
+            {
+                isStreaked = false;
+                streakLevel = 0;
+                currStreakTime = 0;
+            }
+            GameUI.Ins.UpdateStreakTime(streakLevel == 0 ? 0 : currStreakTime / streakLevels[streakLevel - 1]);
+            GameUI.Ins.UpdateStreakLabel(streakLevel == 0 ? 1 : multipleStreak[streakLevel - 1]);
         }
         if (m_viewFinder)
         {
@@ -60,9 +87,8 @@ public class Player : Singleton<Player>
         }
 
         isShooted = true;
-        Vector3 shootDir = Camera.main.transform.position - mousePos;
-        shootDir.Normalize();
-        RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, shootDir);
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, new Vector3(0, 1f, 0));
 
         if (hits.Length > 0)
         {
@@ -75,6 +101,9 @@ public class Player : Singleton<Player>
                     bird.Dead();
                 }
             }
+            isStreaked = true;
+            streakLevel = streakLevel == streakLevels.Length ? streakLevel : streakLevel + 1;
+            currStreakTime = streakLevels[streakLevel - 1];
         }
         else
         {

@@ -63,7 +63,7 @@ public class Bird : MonoBehaviour
 
     public void Dead()
     {
-        GameController.Ins.Score += point;
+        GameController.Ins.Score += point* Player.Ins.GetMultipleStreakPoint();
 
         Destroy(gameObject);
 
