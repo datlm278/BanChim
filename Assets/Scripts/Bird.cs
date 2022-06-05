@@ -12,7 +12,6 @@ public class Bird : MonoBehaviour
 
     Rigidbody2D m_rigidbody2D;
     bool m_isMoveLeft;
-    bool m_isDead;
     private void Awake()
     {
         m_rigidbody2D = GetComponent<Rigidbody2D>();
@@ -56,8 +55,6 @@ public class Bird : MonoBehaviour
 
     public void Dead()
     {
-        m_isDead = true;
-
         GameController.Ins.BirdKilled++;
 
         Destroy(gameObject);

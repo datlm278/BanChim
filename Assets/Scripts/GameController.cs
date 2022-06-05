@@ -81,11 +81,11 @@ public class GameController : Singleton<GameController>
         float randCheck = Random.Range(0f, 1f);
         if (randCheck >= 0.5f)
         {
-            spawnPos = new Vector3(15, Random.Range(1.5f, 4f), 0);
+            spawnPos = new Vector3(4, Random.Range(0, 2.5f), 0);
         }
         else
         {
-            spawnPos = new Vector3(-15, Random.Range(1.5f, 4f), 0);
+            spawnPos = new Vector3(-15, Random.Range(0, 2.5f), 0);
         }
 
         if (birdPrefabs != null && birdPrefabs.Length > 0)
@@ -101,7 +101,7 @@ public class GameController : Singleton<GameController>
     string IntToTime(int time)
     {
         float minutes = Mathf.Floor(time / 60);
-        float seconds = Mathf.RoundToInt(time% 60);
+        float seconds = Mathf.RoundToInt(time % 60);
 
         return minutes.ToString("00") + " : " + seconds.ToString("00");
     }

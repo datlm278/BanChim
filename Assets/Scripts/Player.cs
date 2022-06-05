@@ -13,14 +13,14 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        m_curFireRate = fireRate;        
+        m_curFireRate = fireRate;
     }
 
     private void Start()
     {
         if (viewFinder)
         {
-           m_viewFinder = Instantiate(viewFinder, Vector3.zero, Quaternion.identity);
+            m_viewFinder = Instantiate(viewFinder, Vector3.zero, Quaternion.identity);
         }
     }
 
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
         if (isShooted)
         {
             m_curFireRate -= Time.deltaTime;
-            if (m_curFireRate < 0)
+            if (m_curFireRate <= 0)
             {
                 isShooted = false;
                 m_curFireRate = fireRate;
@@ -54,19 +54,18 @@ public class Player : MonoBehaviour
         shootDir.Normalize();
         RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, shootDir);
 
-        if (hits.Length > 0 && hits != null)
+        if (hits.Length > 0)
         {
             for (int i = 0; i < hits.Length; i++)
             {
                 RaycastHit2D hit = hits[i];
-                if (hit.collider != null && (Vector3.Distance((Vector2)hit.collider.transform.position, (Vector2)mousePos) <= 0.4f))
+
+                Bird bird = hit.collider.GetComponent<Bird>();
+                if (bird != null)
                 {
-                    Bird bird = hit.collider.GetComponent<Bird>();
-                    if (bird != null)
-                    {
-                        bird.Dead();
-                    }
+                    bird.Dead();
                 }
+
             }
         }
 

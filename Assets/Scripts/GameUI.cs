@@ -96,6 +96,8 @@ public class GameUI : Singleton<GameUI>
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+
+
     public void exitGame()
     {
         resumeGame();
