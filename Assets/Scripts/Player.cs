@@ -2,21 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Singleton<Player>
 {
     public float fireRate;
     float m_curFireRate;
     bool isShooted;
+    bool isStop = false;
 
     public GameObject viewFinder;
     GameObject m_viewFinder;
 
-    private void Awake()
+    public bool IsStop { get => isStop; set => isStop = value; }
+
+    public override void Awake()
     {
+        MakeSingleton(false);
         m_curFireRate = fireRate;
     }
 
-    private void Start()
+    public override void Start()
     {
         if (viewFinder)
         {
@@ -27,6 +31,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
         if (Input.GetMouseButtonDown(0) && !isShooted)
         {
             shoot(mousePos);
@@ -49,6 +54,11 @@ public class Player : MonoBehaviour
     }
     void shoot(Vector3 mousePos)
     {
+        if (IsStop)
+        {
+            return;
+        }
+
         isShooted = true;
         Vector3 shootDir = Camera.main.transform.position - mousePos;
         shootDir.Normalize();
@@ -59,18 +69,24 @@ public class Player : MonoBehaviour
             for (int i = 0; i < hits.Length; i++)
             {
                 RaycastHit2D hit = hits[i];
-
                 Bird bird = hit.collider.GetComponent<Bird>();
                 if (bird != null)
                 {
                     bird.Dead();
                 }
-
+            }
+        }
+        else
+        {
+            GameController.Ins.Health--;
+            GameUI.Ins.UpdateHealth(GameController.Ins.Health);
+            if (GameController.Ins.Health == 0)
+            {
+                GameController.Ins.IsGameOver = true;
             }
         }
 
         CineController.Ins.ShakeTrigger();
-
         AudioController.Ins.PlaySound(AudioController.Ins.shooting);
     }
 }

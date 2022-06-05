@@ -15,9 +15,8 @@ public class GameUI : Singleton<GameUI>
     public Image fireRateFilled;
     public Image streakFilled;
     public Text timer;
-    public Text birdKilled;
-
-    public Text health;
+    public Text m_Score;
+    public Text m_Health;
 
     Dialog m_curDialog;
 
@@ -28,13 +27,13 @@ public class GameUI : Singleton<GameUI>
         MakeSingleton(false);
     }
 
-    public void showGameUi (bool isShow)
+    public void showGameUi(bool isShow)
     {
-        if (gameUI)
+        if (gameUI != null)
         {
             gameUI.SetActive(isShow);
         }
-        if (homeUi)
+        if (homeUi != null)
         {
             homeUi.SetActive(!isShow);
         }
@@ -42,18 +41,22 @@ public class GameUI : Singleton<GameUI>
 
     public void UpdateTimer(string time)
     {
-       if (timer != null)
+        if (timer != null)
         {
             timer.text = time;
         }
     }
 
-    public void updateBirdKilled(int killed)
+    public void UpdateHealth(int health)
     {
-        if (birdKilled != null)
-        {
-            birdKilled.text = "x" + killed.ToString();
-        }
+        Debug.Log(health);
+        m_Health.text = "x" + health;
+    }
+
+    public void updateScore(int score)
+    {
+        Debug.Log(score);
+        m_Score.text = "x" + score;
     }
 
     public void updateFireRate(float rate)
@@ -70,7 +73,7 @@ public class GameUI : Singleton<GameUI>
         if (pauseDialog != null)
         {
             pauseDialog.show(true);
-            pauseDialog.UpdateDialog("Game pause", "Best killed: x" + Prefs.bestScore);
+            pauseDialog.UpdateDialog("Game pause", "Best score: x" + Prefs.bestScore);
             m_curDialog = pauseDialog;
         }
     }

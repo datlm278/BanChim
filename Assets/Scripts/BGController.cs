@@ -9,7 +9,7 @@ public class BGController : Singleton<BGController>
     public SpriteRenderer spriteRenderer;
     public override void Awake()
     {
-        MakeSingleton(false);
+        MakeSingleton(true);
     }
 
     public override void Start()

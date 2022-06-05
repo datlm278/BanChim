@@ -12,6 +12,8 @@ public class Bird : MonoBehaviour
 
     Rigidbody2D m_rigidbody2D;
     bool m_isMoveLeft;
+    bool m_isDead;
+    bool m_isStop = false;
     private void Awake()
     {
         m_rigidbody2D = GetComponent<Rigidbody2D>();
@@ -24,6 +26,10 @@ public class Bird : MonoBehaviour
 
     private void Update()
     {
+        if (m_isStop)
+        {
+            return;
+        }
         m_rigidbody2D.velocity = m_isMoveLeft ? new Vector2(-xSpeed, Random.Range(minYSpeed, maxYSpeed)) : new Vector2(xSpeed, Random.Range(minYSpeed, maxYSpeed));
         Flip();
     }
@@ -40,9 +46,9 @@ public class Bird : MonoBehaviour
             if (transform.localScale.x < 0)
             {
                 return;
-            } 
+            }
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-        } 
+        }
         else
         {
             if (transform.localScale.x > 0)
@@ -55,7 +61,7 @@ public class Bird : MonoBehaviour
 
     public void Dead()
     {
-        GameController.Ins.BirdKilled++;
+        GameController.Ins.Score++;
 
         Destroy(gameObject);
 
@@ -63,6 +69,12 @@ public class Bird : MonoBehaviour
         {
             Instantiate(deathVfx, transform.position, Quaternion.identity);
         }
-        GameUI.Ins.updateBirdKilled(GameController.Ins.BirdKilled);
+        GameUI.Ins.updateScore(GameController.Ins.Score);
+    }
+
+    public void Stop()
+    {
+        m_isStop = true;
+        m_rigidbody2D.velocity = new Vector2(0f, 0f);
     }
 }

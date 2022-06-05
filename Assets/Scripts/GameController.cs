@@ -7,14 +7,18 @@ public class GameController : Singleton<GameController>
     public float spawnTime;
     public Bird[] birdPrefabs;
     public int timeLimit;
-
+    public GameUI gameUI;
+    private List<Bird> birds = new List<Bird>();
     int m_curTimeLimit;
-    int m_birdKilled;
-    bool m_isGameOver;
+    int m_score = 0;
+    bool m_isGameOver = false;
+    int m_health = 4;
 
+    public List<Bird> Birds { get => birds; set => birds = value; }
     public int CurTimeLimit { get => m_curTimeLimit; set => m_curTimeLimit = value; }
-    public int BirdKilled { get => m_birdKilled; set => m_birdKilled = value; }
+    public int Score { get => m_score; set => m_score = value; }
     public bool IsGameOver { get => m_isGameOver; set => m_isGameOver = value; }
+    public int Health { get => m_health; set => m_health = value; }
 
     public override void Awake()
     {
@@ -25,7 +29,8 @@ public class GameController : Singleton<GameController>
     public override void Start()
     {
         GameUI.Ins.showGameUi(false);
-        GameUI.Ins.updateBirdKilled(m_birdKilled);
+        GameUI.Ins.UpdateHealth(m_health);
+        GameUI.Ins.updateScore(m_score);
     }
 
     public void PlayGame()
@@ -37,32 +42,31 @@ public class GameController : Singleton<GameController>
 
     IEnumerator TimeCountDown()
     {
-        while (m_curTimeLimit > 0)
+        while (m_curTimeLimit > 0 && !IsGameOver)
         {
             yield return new WaitForSeconds(1f);
             m_curTimeLimit--;
-            if (m_curTimeLimit <= 0)
-            {
-                m_isGameOver = true;
-
-                if (m_birdKilled > Prefs.bestScore)
-                {
-                    GameUI.Ins.gameDialog.UpdateDialog("New best", "Best killed: x" + m_birdKilled);
-                } 
-                else if (m_birdKilled < Prefs.bestScore)
-                {
-                    GameUI.Ins.gameDialog.UpdateDialog("Game over", "your score: x" + m_birdKilled);
-                }
-
-                Prefs.bestScore = m_birdKilled;
-
-                GameUI.Ins.gameDialog.show(true);
-                GameUI.Ins.CurDialog = GameUI.Ins.gameDialog;
-
-            }
             GameUI.Ins.UpdateTimer(IntToTime(m_curTimeLimit));
-
         }
+
+        m_isGameOver = true;
+
+        if (m_score > Prefs.bestScore)
+        {
+            GameUI.Ins.gameDialog.UpdateDialog("New best", "Best killed: x" + m_score);
+        }
+        else if (m_score < Prefs.bestScore)
+        {
+            GameUI.Ins.gameDialog.UpdateDialog("Game over", "your score: x" + m_score);
+        }
+
+        Prefs.bestScore = m_score;
+
+        GameUI.Ins.gameDialog.show(true);
+        GameUI.Ins.CurDialog = GameUI.Ins.gameDialog;
+
+        StopAllBirds();
+        Player.Ins.IsStop = true;
     }
 
     IEnumerator GameSpawn()
@@ -94,10 +98,21 @@ public class GameController : Singleton<GameController>
             if (birdPrefabs[randIdx] != null)
             {
                 Bird bird = Instantiate(birdPrefabs[randIdx], spawnPos, Quaternion.identity);
+                birds.Add(bird);
             }
         }
     }
 
+    public void StopAllBirds()
+    {
+        foreach (var bird in birds)
+        {
+            if (bird != null)
+            {
+                bird.Stop();
+            }
+        }
+    }
     string IntToTime(int time)
     {
         float minutes = Mathf.Floor(time / 60);
@@ -105,5 +120,4 @@ public class GameController : Singleton<GameController>
 
         return minutes.ToString("00") + " : " + seconds.ToString("00");
     }
-
 }
