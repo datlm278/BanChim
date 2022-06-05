@@ -13,6 +13,7 @@ public class GameUI : Singleton<GameUI>
     public Dialog pauseDialog;
 
     public Image fireRateFilled;
+    public Image streakFilled;
     public Text timer;
     public Text birdKilled;
 
