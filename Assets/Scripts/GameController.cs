@@ -53,11 +53,11 @@ public class GameController : Singleton<GameController>
 
         if (m_score > Prefs.bestScore)
         {
-            GameUI.Ins.gameDialog.UpdateDialog("New best", "Best killed: x" + m_score);
+            GameUI.Ins.gameDialog.UpdateDialog("New best", "Best killed: x" + m_score, "new high score: x" + m_score);
         }
         else if (m_score < Prefs.bestScore)
         {
-            GameUI.Ins.gameDialog.UpdateDialog("Game over", "your score: x" + m_score);
+            GameUI.Ins.gameDialog.UpdateDialog("Game over", "your score: x" + m_score, "high score: x" + Prefs.bestScore);
         }
 
         Prefs.bestScore = m_score;

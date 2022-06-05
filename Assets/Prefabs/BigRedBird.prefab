@@ -157,4 +157,5 @@ MonoBehaviour:
   xSpeed: 3
   minYSpeed: -2
   maxYSpeed: 1.5
+  point: 10
   deathVfx: {fileID: 149344, guid: 617378de28fbaa64c96485d5b0d9169b, type: 3}

@@ -7,6 +7,7 @@ public class Dialog : MonoBehaviour
 {
     public Text titleText;
     public Text contentText;
+    public Text highScoreText;
 
     public void show(bool isShow)
     {
@@ -21,6 +22,22 @@ public class Dialog : MonoBehaviour
         if (contentText != null)
         {
             contentText.text = content;
+        }
+    }
+
+    public void UpdateDialog(string title, string content, string highScore)
+    {
+        if (titleText != null)
+        {
+            titleText.text = title;
+        }
+        if (contentText != null)
+        {
+            contentText.text = content;
+        }
+        if (contentText != null)
+        {
+            highScoreText.text = highScore;
         }
     }
 }
