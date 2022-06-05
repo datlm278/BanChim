@@ -7,6 +7,8 @@ public class Bird : MonoBehaviour
     public float xSpeed;
     public float minYSpeed;
     public float maxYSpeed;
+    public int score;
+
 
     public GameObject deathVfx;
 
